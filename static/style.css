@@ -1,3 +1,17 @@
+:root {
+  color-scheme: dark;
+}
+
+.dark {
+  background-color: #181818;
+  color: blue;
+}
+
+@font-face {
+  font-family: 'Mandala Absolute';
+  src: url('path/to/MandalaAbsolute.ttf') format('truetype'); /* Adjust path as necessary */
+}
+
 html, body {
   height: 100%;
   margin: 0;
@@ -8,16 +22,12 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: 'Mandala Absolute', cursive; /* Fallback to cursive */
 }
 
 h1 {
   margin: 10px;
-  color: orange;
-}
-
-h2 {
-  margin: 10px;
-  color: darkorange;
+  color: blue;
 }
 
 .heart {
@@ -28,6 +38,7 @@ h2 {
   transform: rotate(-45deg);
   animation: beat 1s infinite;
   margin-top: 50px;
+  margin-bottom: 30px;
 }
 
 .heart::before,
