@@ -4,12 +4,7 @@
 
 .dark {
   background-color: #181818;
-  color: blue;
-}
-
-@font-face {
-  font-family: 'Mandala Absolute';
-  src: url('path/to/MandalaAbsolute.ttf') format('truetype'); /* Adjust path as necessary */
+  color: darkcyan;
 }
 
 html, body {
@@ -22,12 +17,11 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: 'Mandala Absolute', cursive; /* Fallback to cursive */
+  font-family: cursive;
 }
 
-h1 {
+h1, h2 {
   margin: 10px;
-  color: blue;
 }
 
 .heart {
