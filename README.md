@@ -11,7 +11,7 @@ sh script/service-start.sh
 sh script/docker-compose-run.sh
 ```
 
-# GitHub
+# Configuration
 
 ## File
 ```
@@ -19,6 +19,12 @@ sh script/docker-compose-run.sh
 /pack.txt
 /Dockerfile
 /.github/workflows/docker-build.yml
+```
+
+## Environment variables
+```
+rename and modify
+.env.blank -> .env
 ```
 
 ## Repository-Secret
@@ -45,8 +51,12 @@ ID_RSA_PUB = <GitHub public key>
 ## Docker-Build
 ```
 git push triggers /.github/workflows/docker-build.yml
-- Dockerfile makes docker-container with flask-app
+- Dockerfile makes Flask-App Image
 - Builds and pushes docker-image to GitHub Container-Service
+- Updates nginx.conf and restarts Nginx-Container
+- Updates docker-compose.yml
+- Updates Docker-Containers
+- Runs Docker-Compose
 ```
 
 ## Docker-Compose
@@ -57,7 +67,7 @@ Restarts:
 - certbot.service
 ```
 
-## Restart
+## Restart manually
 ```
 sh script/service-restart.sh
 sh script/docker-compose-restart.sh
