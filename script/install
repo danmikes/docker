@@ -1,6 +1,5 @@
-#!/bin/bash
-
-source .env
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 
 ssh $PI_USER@$PI_HOST << EOF
   sudo apt-get update && sudo apt-get upgrade
