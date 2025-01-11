@@ -1,34 +1,41 @@
-services:
-  flask-app:
-    image: ghcr.io/danmikes/docker:latest
-    ports:
-      - "5000:5000"
-    command: gunicorn --workers=3 --bind 0.0.0.0:5000 "app:app" 
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
+networks:
+  traefik-net:
+    driver: bridge
 
-  nginx:
-    image: nginx:alpine
-    volumes:
-      - certbot-www:/var/www/certbot
-      - letsencrypt:/etc/letsencrypt
-      - nginx-conf:/etc/nginx/nginx.conf:ro
+services:
+  traefik:
+    image: traefik:v3.3
+    networks: 
+      - traefik-net
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.file.filename=/etc/traefik/traefik_dynamic.yml
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
     ports:
       - "80:80"
       - "443:443"
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certificates:/certificates
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik_dynamic.yml:/etc/traefik/traefik_dynamic.yml:ro
 
-  certbot:
-    image: certbot/certbot
-      - certbot-www:/var/www/certbot
-      - letsencrypt:/etc/letsencrypt
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-    restart: unless-stopped
+  flask:
+    image: ghcr.io/danmikes/docker:latest
+    networks:
+      - traefik-net
+    restart: always
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.flask.rule=Host(`dmikes.hopto.org`)
+      - traefik.http.routers.flask.entrypoints=websecure
+      - traefik.http.routers.flask.tls=true
+      - traefik.http.routers.flask.tls.certresolver=myresolver
+      - traefik.http.services.flask.loadbalancer.server.port=5000
+    command: gunicorn --bind 0.0.0.0:5000 app:app
 
 volumes:
-  nginx-conf:
-  letsencrypt:
-  certbot-www:
+  certificates:

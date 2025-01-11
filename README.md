@@ -1,74 +1,82 @@
-# Mac
+# Flask-App
 
-## Create GitHub Key-Pair
-```
-sh script/key-create.sh
-sh script/key-add.sh
-sh script/certbot-install.sh
-sh script/conf-copy.sh
-sh script/docker-install.sh
-sh script/service-start.sh
-sh script/docker-compose-run.sh
-```
+## Local
 
-# Configuration
+### File
+- /app.py
+- /pack.txt
+- /Dockerfile
+- /.github/workflows/docker-build.yml
 
-## File
-```
-/app.py
-/pack.txt
-/Dockerfile
-/.github/workflows/docker-build.yml
-```
+### Script
+- sh script/docker-copy.sh
+- sh script/docker-install.sh
+- sh script/docker-refresh.sh
+- sh script/docker-update.sh
 
-## Environment variables
-```
-rename and modify
-.env.blank -> .env
-```
+### Environment Variable
+- .env.blank -> .env
 
-## Repository-Secret
-```
-PI_HOST = <Raspi hostname>
-PI_USER = <Raspi username>
-PI_PASS = <Raspi password>
-ID_RSA = <GitHub private key>
-```
+## GitHub
 
-## Deploy-Key
-```
-ID_RSA_PUB = <GitHub public key>
-```
+### Repository Secret
+- PI_HOST = <Raspi hostname>
+- PI_USER = <Raspi username>
+- PI_PASS = <Raspi password>
 
-# Router
+## Router
 
-## Port
-```
-80 -> 192.168.178.199
-443 -> 192.168.178.199
-```
+### Port
+- 80 -> 192.168.178.199
+- 443 -> 192.168.178.199
 
-## Docker-Build
-```
-git push triggers /.github/workflows/docker-build.yml
-- Dockerfile makes Flask-App Image
+## GitHub-actions
+
+### docker-build.yml
+- `git push` triggers /.github/workflows/docker-build.yml
+- Dockerfile makes Gunicorn-Flask Image
 - Builds and pushes docker-image to GitHub Container-Service
-- Updates nginx.conf and restarts Nginx-Container
 - Updates docker-compose.yml
-- Updates Docker-Containers
-- Runs Docker-Compose
+
+## Shell-script
+
+### docker-compose.yml
+- `sh update` triggers 
+  - `docker compose pull`
+  - `docker compose up` | +1 container
+  - `docker compose up` | -1 container
+
+## Log
+```
+docker volume ls
+docker compose logs -f docker-traefik-1
+docker compose logs -f docker-flask-1
 ```
 
-## Docker-Compose
+## Docker
 ```
-Restarts:
-- gunicorn.service
-- nginx.service
-- certbot.service
+docker exect -it docker-flask-1 sh
+docker exect -it docker-traefik-1 sh
 ```
 
-## Restart manually
+# Update App
+
+1. push changes to GitHub-repo
 ```
-sh script/service-restart.sh
-sh script/docker-compose-restart.sh
+git push
+```
+
+2. verify build by GitHub-action
+```
+cd sh build
+```
+
+3. copy conf files to Raspi
+```
+sh copy
+```
+
+4. restart Flask-container
+```
+sh update
 ```
