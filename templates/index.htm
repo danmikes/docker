@@ -1,15 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-  <title>Docker-App</title>
-</head>
-<body class="dark">
-  <h1>Docker-App</h1>
-  <div class="heart"></div>
-  <h2 class="blacksword">Welcome</h2>
-</body>
-</html>
+{% extends 'base.htm' %}
+
+{% block title %}Home - Mikes Consult{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container">
+    <!-- Section Features -->
+    <div class="columns is-vcentered is-multiline">
+      <div class="column is-4">
+        <div class="card feature-card">
+          <div class="card-content has-text-centered">
+            <div class="icon is-large has-text-primary">
+              <i class="fas fa-rocket fa-3x"></i>
+            </div>
+            <h3 class="title is-4 mt-4">Fast Results</h3>
+            <p>Quick implementation and measurable outcomes for your business</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column is-4">
+        <div class="card feature-card">
+          <div class="card-content has-text-centered">
+            <div class="icon is-large has-text-info">
+              <i class="fas fa-chart-bar fa-3x"></i>
+            </div>
+            <h3 class="title is-4 mt-4">Data Driven</h3>
+            <p>Evidence-based strategies backed by comprehensive analysis</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column is-4">
+        <div class="card feature-card">
+          <div class="card-content has-text-centered">
+            <div class="icon is-large has-text-success">
+              <i class="fas fa-handshake fa-3x"></i>
+            </div>
+            <h3 class="title is-4 mt-4">Partnership</h3>
+            <p>We work closely with you to achieve your business goals</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section About -->
+    <div class="columns is-vcentered mt-6">
+      <div class="column is-6">
+        <h2 class="title is-2">Why choose Mikes Consult?</h2>
+        <p class="subtitle is-5 has-text-grey">
+          With years of industry experience and a proven track record, we deliver exceptional consulting services tailored to your unique needs
+        </p>
+        <div class="content">
+          <ul>
+            <li>✅ Customised business solutions</li>
+            <li>✅ Expert industry knowledge</li>
+            <li>✅ Transparent pricing</li>
+            <li>✅ Ongoing support</li>
+          </ul>
+        </div>
+        <a href="{{ url_for('contact') }}" class="button is-primary is-medium">
+          <span>Start your project</span>
+          <span class="icon">
+            <i class="fas fa-arrow-right"></i>
+          </span>
+        </a>
+      </div>
+
+      <div class="column is-6">
+        <div class="box has-background-light">
+          <h3 class="title is-4">Ready to transform your business?</h3>
+          <p>Contact us today for a free consulation and discover how we can help you achieve your goals</p>
+          <a href="{{ url_for('contact') }}" class="button is-outlined is-primary mt-3">
+            Free consultation
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
