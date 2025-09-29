@@ -2,41 +2,40 @@
   <div class="hero-head">
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="container">
-        <div class="container">
-          <div class="navbar-brand">
-            <a class="navbar-item" href="{{ url_for('index') }}">
-              <i class="fas fa-chart-line fa-lg mr-2"></i>
-              <strong>Mikes Consult</strong>
-            </a>
+        <div class="navbar-brand">
+          <a class="navbar-item" href="{{ url_for('index') }}">
+            <i class="fas fa-chart-line fa-lg mr-2"></i>
+            <strong>Mikes Consult</strong>
+          </a>
 
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+
+        <div id="navbarMenu" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item" href="{{ url_for('index') }}">
+              <i class="fas fa-home mr-2"></i>Home
+            </a>
+            <a class="navbar-item" href="{{ url_for('service') }}">
+              <i class="fas fa-cogs mr-2"></i>Service
+            </a>
+            <a class="navbar-item" href="{{ url_for('contact') }}">
+              <i class="fas fa-envelope mr-2"></i>Contact
             </a>
           </div>
 
-          <div id="navbarMenu" class="navbar-menu">
-            <div class="navbar-start">
-              <a class="navbar-item" href="{{ url_for('index') }}">
-                <i class="fas fa-home mr-2"></i>Home
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <a class="icon has-text-light mr-2" href="https://github.com/danmikes">
+                <i class="fab fa-github fa-lg"></i>
               </a>
-              <a class="navbar-item" href="{{ url_for('service') }}">
-                <i class="fas fa-cogs mr-2"></i>Service
+              <a class="icon has-text-light" href="https://linkedin.com/in/dmikes">
+                <i class="fab fa-linkedin fa-lg"></i>
               </a>
-              <a class="navbar-item" href="{{ url_for('contact') }}">
-                <i class="fas fa-envelope mr-2"></i>Contact
-              </a>
-            </div>
-
-            <div class="navbar-end">
-              <div class="navbar-item">
-                <div class="buttons">
-                  <a class="button is-light" href="{{ url_for('contact') }}">
-                    <strong>Get Quote</strong>
-                  </a>
-                </div>
-              </div>
             </div>
           </div>
         </div>

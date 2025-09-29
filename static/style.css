@@ -114,3 +114,56 @@
     background: var(--dark-bg);
   }
 }
+
+/* Flexbox solution for centered navigation */
+.navbar-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.navbar-start {
+  position: static;
+  transform: none;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.navbar-brand,
+.navbar-end {
+  flex: 0 0 auto;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 1023px) {
+  .navbar-menu {
+    flex-direction: column;
+  }
+  
+  .navbar-start {
+    order: 2;
+    justify-content: center;
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+  
+  .navbar-end {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Remove bullets from centered list - more specific */
+.is-centered-list {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+.is-centered-list li {
+  list-style: none !important;
+}
