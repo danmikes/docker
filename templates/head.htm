@@ -4,7 +4,7 @@
       <div class="container">
         <div class="navbar-brand">
           <a class="navbar-item" href="{{ url_for('index') }}">
-            <i class="fas fa-chart-line fa-lg mr-2"></i>
+            <i class="fas fa-circle-nodes fa-lg mr-2" style="color: yellow;"></i>
             <strong>Mikes Consult</strong>
           </a>
 
@@ -18,23 +18,23 @@
         <div id="navbarMenu" class="navbar-menu">
           <div class="navbar-start">
             <a class="navbar-item" href="{{ url_for('index') }}">
-              <i class="fas fa-home mr-2"></i>Home
+              <i class="fas fa-home mr-2" style="color: yellow;"></i>Home
             </a>
             <a class="navbar-item" href="{{ url_for('service') }}">
-              <i class="fas fa-cogs mr-2"></i>Service
+              <i class="fas fa-cogs mr-2" style="color: cyan;"></i>Service
             </a>
             <a class="navbar-item" href="{{ url_for('contact') }}">
-              <i class="fas fa-envelope mr-2"></i>Contact
+              <i class="fas fa-envelope mr-2" style="color: magenta;"></i>Contact
             </a>
           </div>
 
           <div class="navbar-end">
             <div class="navbar-item">
               <a class="icon has-text-light mr-2" href="https://github.com/danmikes">
-                <i class="fab fa-github fa-lg"></i>
+                <i class="fab fa-github fa-lg" style="color: cyan;"></i>
               </a>
               <a class="icon has-text-light" href="https://linkedin.com/in/dmikes">
-                <i class="fab fa-linkedin fa-lg"></i>
+                <i class="fab fa-linkedin fa-lg" style="color: magenta;"></i>
               </a>
             </div>
           </div>
@@ -42,15 +42,19 @@
       </div>
     </nav>
   </div>
-
-  <div class="hero-body">
-    <div class="container has-text-centered">
-      <h1 class="title is-1">
-        Professional Consulting
-      </h1>
-      <p class="subtitle is-4">
-        Expert solutions for your business challenges
-      </p>
-    </div>
-  </div>
 </header>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+  $navbarBurgers.forEach( el => {
+    el.addEventListener('click', () => {
+      const target = el.dataset.target;
+      const $target = document.getElementById(target);
+      el.classList.toggle('is-active');
+      $target.classList.toggle('is-active');
+    });
+  });
+});
+</script>
