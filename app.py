@@ -24,7 +24,7 @@ def contact():
 
     try:
       msg = Message(
-        subject=f"New Contact Form Message from {name}",
+        subject=f"Message from {name}",
         recipients=['max8@post.cz'],
         reply_to=email
       )
@@ -36,7 +36,7 @@ Message: {message}
       mail.send(msg)
       flash(f'Thank you {name}! Your message was sent.', 'success')
     except Exception as e:
-      flash('Apologies, your message was not sent', 'error')
+      flash('Your message was not sent', 'error')
       print(f"Email error: {e}")
 
   return render_template('contact.htm')
