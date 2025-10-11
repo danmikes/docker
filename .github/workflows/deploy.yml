@@ -55,7 +55,7 @@ jobs:
         username: ${{ secrets.PI_USER }}
         key: ${{ secrets.PI_KEY }}
         source: "conf/*.yml"
-        target: "~/docker/"
+        target: "~/docker/conf"
         strip_components: 1
         port: 22
         timeout: 4m
