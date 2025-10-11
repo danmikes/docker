@@ -20,8 +20,8 @@
 
 ## View
 - [local](http://localhost:5000)
-- [remote](https://dmikes.hopto.org)
-- [health](https://dmikes.hopto.org/health)
+- [remote](https://dmikes.duckdns.org)
+- [health](https://dmikes.duckdns.org/health)
 
 ## Check
 - `source .env`
