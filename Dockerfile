@@ -14,4 +14,4 @@ copy app.py .
 copy templates/ ./templates/
 copy static/ ./static/
 
-cmd ["gunicorn", "--bind", "0.0.0.0:8000", "app:app"]
+cmd ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
