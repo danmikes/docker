@@ -19,9 +19,9 @@ services:
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - certificates:/certificates
-      - ./traefik.yml:/etc/traefik/traefik.yml:ro
-      - ./traefik_dynamic.yml:/etc/traefik/traefik_dynamic.yml:ro
+      - ./conf/certificates:/certificates
+      - ./conf/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./conf/traefik_dynamic.yml:/etc/traefik/traefik_dynamic.yml:ro
 
   flask:
     image: ghcr.io/danmikes/docker:latest

@@ -20,7 +20,7 @@ http:
       service: noop@internal
 
     flask-native:
-      rule: "Host(`dmikes.duckdns.org`) && PathPrefix(`/app`)"
+      rule: "Host(`dmikes.duckdns.org`) && (PathPrefix(`/app`) || PathPrefix(`/static`))"
       entryPoints:
         - websecure
       service: flask-native
@@ -33,7 +33,7 @@ http:
     flask-native:
       loadBalancer:
         servers:
-          - url: "http://host.docker.internal:5001"
+          - url: "http://172.17.0.1:5001"
 
 tls:
   options:
