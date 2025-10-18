@@ -12,9 +12,24 @@
   <title>{% block title %}Mikes Consult{% endblock %}</title>
 </head>
 <body data-theme="dark">
-  <section class="container">
-    <h1 class="center-title">Docker</h1>
-  </section>
+  <header>
+    <h1 class="center-title">Mikes Consult</h1>
+  </header>
+
+  <main>
+    <section>
+      <div class="grid-container grid-3">
+        {% for link in links %}
+          <a href="{{ link.url }}" type="button" target="_blank" class="btn">{{ link.name }}</a>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Daniel MIKES</p>
+  </footer>
+
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

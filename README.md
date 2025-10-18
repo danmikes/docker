@@ -1,6 +1,6 @@
 # Flask-App
 - Mikes-Consult
-- Flask Python Jinja Bulma Docker
+- Flask Python Jinja Pico Docker
 
 ## Code
 - [github](https://github.com/danmikes/docker)
