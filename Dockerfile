@@ -7,6 +7,7 @@ ENV TZ=Europe/Amsterdam
 
 copy pack.txt .
 
+run pip install --upgrade pip
 run pip install --no-cache-dir -r pack.txt
 
 copy app.py .

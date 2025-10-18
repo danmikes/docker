@@ -1,13 +1,13 @@
 # Flask-App
 - Mikes-Consult
-- Flask Python Jinja Bulma Docker
+- Flask Python Jinja Pico Docker
 
 ## Code
 - [github](https://github.com/danmikes/docker)
 
 ## Install
 - `python3.13 -m venv venv`
-- `python -m pip install -r conf/pack.txt`
+- `python -m pip install -r pack.txt`
 
 ## Router
 - [192.168.2.254](http://192.168.2.254)
