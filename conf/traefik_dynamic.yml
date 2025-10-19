@@ -10,6 +10,11 @@ http:
         prefixes:
           - "/app"
 
+    flask-script-name:
+      headers:
+        customRequestHeaders:
+          X-Script-Name: "/app"
+
   routers:
     http-to-https:
       entryPoints:
@@ -28,6 +33,7 @@ http:
         certResolver: myresolver
       middlewares:
         - flask-strip
+        - flask-script-name
 
   services:
     flask-native:
@@ -39,3 +45,7 @@ tls:
   options:
     default:
       minVersion: VersionTLS12
+      cipherSuites:
+        - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+      sessionTicket: {}
