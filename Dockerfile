@@ -22,5 +22,6 @@ run python -m pip install --no-cache-dir -r requirements.txt
 copy app.py .
 copy templates/ ./templates/
 copy static/ ./static/
+copy samsim.py .
 
 cmd ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
