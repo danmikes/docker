@@ -5,7 +5,7 @@ http:
         scheme: https
         permanent: true
 
-    flask-native-strip:
+    flask-strip:
       stripPrefix:
         prefixes:
           - "/app"
@@ -19,15 +19,15 @@ http:
         - redirect-to-https
       service: noop@internal
 
-    flask-native:
-      rule: "Host(`dmikes.duckdns.org`) && (PathPrefix(`/app`) || PathPrefix(`/static`))"
+    flask-app:
+      rule: "Host(`dmikes.duckdns.org`) && PathPrefix(`/app`)"
       entryPoints:
         - websecure
       service: flask-native
       tls:
         certResolver: myresolver
       middlewares:
-        - flask-native-strip
+        - flask-strip
 
   services:
     flask-native:
