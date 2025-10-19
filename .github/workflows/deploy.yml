@@ -54,7 +54,7 @@ jobs:
         host: ${{ secrets.PI_HOST }}
         username: ${{ secrets.PI_USER }}
         key: ${{ secrets.PI_KEY }}
-        source: ".,!__pycache__,!.git,!.github,!.venv,!.vscode,!.dockerignore,!.gitignore,!Dockerfile,!README.md,!.DS_Store"
+        source: ".,!__pycache__,!.git,!.github,!.venv,!.vscode,!.dockerignore,!.gitignore,!README.md,!.DS_Store"
         target: "~/docker/"
         strip_components: 1
         port: 22

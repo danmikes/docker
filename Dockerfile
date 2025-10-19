@@ -1,14 +1,23 @@
-from python:3.9-alpine
+from arm32v6/python:3.9-alpine
 
 workdir /app
 
-RUN apk add --no-cache tzdata
-ENV TZ=Europe/Amsterdam
+run apk add --no-cache \
+  g++ \
+  gcc \
+  libffi-dev \
+  musl-dev \
+  python3-dev \
+  tzdata
 
-copy pack.txt .
+env TZ=Europe/Amsterdam
 
-run pip install --upgrade pip
-run pip install --no-cache-dir -r pack.txt
+copy requirements.txt .
+
+env SKLEARN_NO_OPENMP=1
+env SETUPTOOLS_USE_DISTUTILS=stdlib
+run python -m pip install --upgrade pip
+run python -m pip install --no-cache-dir -r requirements.txt
 
 copy app.py .
 copy templates/ ./templates/
