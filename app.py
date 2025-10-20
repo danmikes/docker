@@ -1,4 +1,5 @@
 import io
+import os
 from flask import current_app, Flask, render_template, jsonify, request, send_file
 from datetime import datetime
 from git import Repo
@@ -6,13 +7,11 @@ import core as ss
 import matplotlib.pyplot as plt
 
 app = Flask(__name__)
-app.config['APPLICATION_ROOT'] = '/samsim'
-
-def config_app():
-  app.config.update({
-    'WORKING_DIRECTORY': '/home/dmikes/samsim',
-    'WSGI_PATH': '/var/www/dmikes_eu_pythonanywhere_com_wsgi.py',
-  })
+app.config.update({
+  'APPLICATION_ROOT': '/samsim',
+  'WORKING_DIRECTORY': '/home/dmikes/samsim',
+  'WSGI_PATH': '/var/www/dmikes_eu_pythonanywhere_com_wsgi.py',
+})
 
 params = [
   [{'name': name, 'label': name, 'type': 'number', 'value': val, 'size': size, 'color': color}
