@@ -24,7 +24,7 @@ services:
       - ./conf/traefik_dynamic.yml:/etc/traefik/traefik_dynamic.yml:ro
 
   flask:
-    image: ghcr.io/danmikes/docker:latest
+    image: ghcr.io/danmikes/samsim:latest
     pull_policy: always
     networks:
       - traefik-net
