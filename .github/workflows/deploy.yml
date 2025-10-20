@@ -54,7 +54,7 @@ jobs:
         host: ${{ secrets.PI_HOST }}
         username: ${{ secrets.PI_USER }}
         key: ${{ secrets.PI_KEY }}
-        source: "app.py,static/,templates/,samsim.py,requirements.txt"
+        source: "app.py,samsim.py,requirements.txt,static/,templates/"
         target: "~/docker/"
         strip_components: 1
         port: 22

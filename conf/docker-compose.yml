@@ -47,7 +47,3 @@ services:
       - traefik.http.routers.flask.tls=true
       - traefik.http.routers.flask.tls.certresolver=myresolver
       - traefik.http.services.flask.loadbalancer.server.port=5000
-    command: gunicorn --bind 0.0.0.0:5000 app:app
-
-volumes:
-  certificates:
