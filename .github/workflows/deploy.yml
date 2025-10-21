@@ -1,14 +1,9 @@
 name: Deploy to PythonAnywhere
 
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
 
-jobs:
-  call-webhook:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger deploy
-        run: |
-          curl -f -X POST https://dmikes.eu.pythonanywhere.com/samsim/update
+# ToDo : ssh-update

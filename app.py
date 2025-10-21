@@ -1,5 +1,4 @@
 import io
-import os
 from flask import Flask, render_template, jsonify, request, send_file
 from datetime import datetime
 from git import Repo
@@ -137,19 +136,6 @@ def run_animation():
     return send_file(buf, mimetype='image/png')
   except Exception as e:
     return jsonify({'error': str(e)}), 500
-
-@app.route('/update', methods=['POST'])
-def update():
-  if request.method == 'POST':
-    repo = Repo(app.root_path)
-    origin = repo.remotes.origin
-    origin.fetch()
-    repo.git.reset('--hard', 'origin/main')
-
-    os.system(f"touch {app.config['WSGI_PATH']}")
-    return 'PythonAnywhere updated', 200
-  else:
-    return 'Invalid request', 405
 
 @app.route('/health')
 def health_check():
