@@ -1,28 +1,25 @@
 import io
 import os
-from flask import current_app, Flask, render_template, jsonify, request, send_file
+from flask import Flask, render_template, jsonify, request, send_file
 from datetime import datetime
 from git import Repo
-import core as ss
 import matplotlib.pyplot as plt
 
-app = Flask(__name__)
-app.config.update({
-  'APPLICATION_ROOT': '/samsim',
-  'WORKING_DIRECTORY': '/home/dmikes/samsim',
-  'WSGI_PATH': '/var/www/dmikes_eu_pythonanywhere_com_wsgi.py',
-})
+app = Flask(__name__, static_folder='static', template_folder='templates')
 
-params = [
-  [{'name': name, 'label': name, 'type': 'number', 'value': val, 'size': size, 'color': color}
-  for name, val, size in params_list]
-  for color, params_list in [
-    ('red', [('T1', ss._T1, 11), ('A1', ss._A1, 6), ('Tm1', ss._Tm1, 10), ('Am1', ss._Am1, 6)]),
-    ('green', [('T2', ss._T2, 11), ('A2', ss._A2, 6), ('Tm2', ss._Tm2, 10), ('Am2', ss._Am2, 6)]),
-    ('yellow', [('T3', ss._T3, 11), ('A3', ss._A3, 6), ('Tm3', ss._Tm3, 10), ('Am3', ss._Am3, 6)]),
-    ('white', [('sam', ss.SAM, 8)])
+def get_params():
+  import core as ss
+  params = [
+    [{'name': name, 'label': name, 'type': 'number', 'value': val, 'size': size, 'color': color}
+    for name, val, size in params_list]
+    for color, params_list in [
+      ('red', [('T1', ss._T1, 11), ('A1', ss._A1, 6), ('Tm1', ss._Tm1, 10), ('Am1', ss._Am1, 6)]),
+      ('green', [('T2', ss._T2, 11), ('A2', ss._A2, 6), ('Tm2', ss._Tm2, 10), ('Am2', ss._Am2, 6)]),
+      ('yellow', [('T3', ss._T3, 11), ('A3', ss._A3, 6), ('Tm3', ss._Tm3, 10), ('Am3', ss._Am3, 6)]),
+      ('white', [('sam', ss.SAM, 8)])
+    ]
   ]
-]
+  return [param for group in params for param in group]
 
 runs = [
   {'action': 'reset', 'label': 'Reset All', 'color': 'red'},
@@ -32,18 +29,18 @@ runs = [
   {'action': 'run_params', 'label': 'Parameters', 'color': 'lime'},
 ]
 
-flat_params = [param for group in params for param in group]
-
 @app.route('/')
 def index():
+  flat_params = get_params()
   return render_template('index.htm',
     build=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-    params=flat_params,  # Use flat_params instead of grouped
+    params=flat_params,
     runs=runs)
 
 @app.route('/update_params', methods=['POST'])
 def update_parameters():
   try:
+    import core as ss
     data = request.get_json()
     result = ss.update_params(**data)
     return jsonify({'status': 'success', 'message': result, 'current_params': ss.get_current_params()})
@@ -53,6 +50,7 @@ def update_parameters():
 @app.route('/reset')
 def reset():
   try:
+    import core as ss
     result = ss.reset_params()
     return jsonify({'status': 'success', 'message': result, 'current_params': ss.get_current_params()})
   except Exception as e:
@@ -60,11 +58,16 @@ def reset():
 
 @app.route('/current_params')
 def current_params():
-  return jsonify(ss.get_current_params())
+  try:
+    import core as ss;
+    return jsonify(ss.get_current_params())
+  except Exception as e:
+    return jsonify({'error': str(e)}), 500
 
 @app.route('/insolation')
 def run_ins():
   try:
+    import core as ss
     current = ss.get_current_params()
     pars = ss.fullX(**current)
     fig = ss.plot_ins(pars)
@@ -79,6 +82,7 @@ def run_ins():
 @app.route('/simulation')
 def run_sim():
   try:
+    import core as ss
     sam = int(request.args.get('sam', 65))
     current = ss.get_current_params()
     pars = ss.fullX(**current)
@@ -94,6 +98,7 @@ def run_sim():
 @app.route('/simulations')
 def run_sims():
   try:
+    import core as ss
     sam = int(request.args.get('sam', 65))
     param_ranges = getattr(ss, request.args.get('range', '_A_'))
     fig = ss.plot_sims(sam, param_ranges)
@@ -108,6 +113,7 @@ def run_sims():
 @app.route('/parameters')
 def run_parameters():
   try:
+    import core as ss
     fig = ss.plot_pars()
     buf = io.BytesIO()
     fig.savefig(buf, format='png', dpi=100, bbox_inches='tight')
@@ -121,6 +127,7 @@ def run_parameters():
 @app.route('/animation')
 def run_animation():
   try:
+    import core as ss
     param_ranges = getattr(ss, request.args.get('range', '_A_'))
     fig = ss.plot_sims(65, param_ranges)
     buf = io.BytesIO()
@@ -134,12 +141,12 @@ def run_animation():
 @app.route('/update', methods=['POST'])
 def update():
   if request.method == 'POST':
-    repo = Repo(current_app.config['WORKING_DIRECTORY'])
+    repo = Repo(app.root_path)
     origin = repo.remotes.origin
     origin.fetch()
     repo.git.reset('--hard', 'origin/main')
 
-    os.system(f"touch {current_app.config['WSGI_PATH']}")
+    os.system(f"touch {app.config['WSGI_PATH']}")
     return 'PythonAnywhere updated', 200
   else:
     return 'Invalid request', 405
