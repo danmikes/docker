@@ -1,10 +1,18 @@
+import os
+import sys
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
+
 import io
+
 from flask import Flask, render_template, jsonify, request, send_file
 from datetime import datetime
 from git import Repo
 import matplotlib.pyplot as plt
 
-app = Flask(__name__, static_folder='static', template_folder='templates')
+app = Flask(__name__)
 
 def get_params():
   import core as ss
@@ -141,5 +149,4 @@ def run_animation():
 def health_check():
   return jsonify({'status': 'healthy'}), 200
 
-if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=5000, debug=True)
+application = app
