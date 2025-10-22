@@ -203,6 +203,13 @@ def plot_sims(sam=SAM, param_ranges=_A_, pars=PARS):
     ax.plot(x_fit, logistic_function(x_fit, *params), color='cyan')
 
   params, _ = logistic_fit(sams_con, fits_con, (1, 0.4, 60), 1e5)
+
+  y = fit
+  x_y = find_x_for_y(y, *params)
+  x_x = np.interp(y, fits_con, sams_con)  
+  ax2.axhline(y=y, color='yellow', linestyle='--', linewidth=1, label=f'Average: {x_y:.2f}')
+  ax2.axvline(x=x_x, color='magenta', linestyle='--', linewidth=1)
+
   y_vals = [0.05, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95]
   data = [[find_x_for_y(y, *params), y] for y in y_vals][::-1]
   
