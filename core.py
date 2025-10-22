@@ -147,6 +147,10 @@ def set_plot_prop(ax, x_scale, y_scale, x_title, y_title, title, xlim=None, ylim
   ax.grid(True, which='both', color='#333', alpha=0.7)
 
 def logistic_function(x, a, b, c):
+  exponent = -b * (np.log(x) - c).np.clip(exponent, -700, 700)
+  return a / (1 + np.exp(exponent))
+
+def logistic_function(x, a, b, c):
   return a / (1 + np.exp(-b * (np.log(x) - c)))
 
 def logistic_fit(x_data, y_data, params, maxfev=10000):
