@@ -1,16 +1,14 @@
+import io
 import os
 import sys
-
-current_dir = os.path.dirname(os.path.abspath(__file__))
-if current_dir not in sys.path:
-    sys.path.insert(0, current_dir)
-
-import io
-
 from flask import Flask, render_template, jsonify, request, send_file
 from datetime import datetime
 from git import Repo
 import matplotlib.pyplot as plt
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
 
 app = Flask(__name__)
 
@@ -36,11 +34,14 @@ runs = [
   {'action': 'run_params', 'label': 'Parameters', 'color': 'lime'},
 ]
 
+@app.context_processor
+def inject_build_date():
+  return {'build': datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
 @app.route('/')
 def index():
   flat_params = get_params()
   return render_template('index.htm',
-    build=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
     params=flat_params,
     runs=runs)
 

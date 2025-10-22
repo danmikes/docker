@@ -1,9 +1,12 @@
-name: Deploy to PythonAnywhere
+name: Deploy to Google Cloud Run
 
 on:
-  # push:
-  #   branches:
-  #     - main
   workflow_dispatch:
 
-# ToDo : ssh-update
+jobs:
+  call-webhook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger deploy
+        run: |
+          curl -f -H "Authorization: Bearer ${{ secrets.DEPLOY_TOKEN }}" "${{ secrets.DEPLOY_URL }}"
