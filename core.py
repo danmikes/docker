@@ -30,9 +30,6 @@ PARS = PAR1, PAR2, PAR3 = (
   Par(_T3, _A3, _Tm3, _Am3, _p3)
 )
 
-_SAM_SHORT_ = 2 ** np.arange(2, 7)
-_SAM_LONG_ = 2 ** np.arange(1, 10, 0.5)
-
 def create_range(prefix, values):
   return {f'{prefix}{i}': np.asarray(values) for i in (1, 2, 3)}
 
@@ -42,39 +39,19 @@ Tm = create_range('Tm', 2. ** np.arange(0, 3) * 1e5)
 Am = create_range('Am', np.arange(0, 13, 2.5))
 p = create_range('p', 2. ** np.arange(-3, -1) * np.pi)
 
-SAM_L = {'sam': _SAM_LONG_}
-_T_ = T | SAM_L
-_A_ = A | SAM_L  
-_Tm_ = Tm | SAM_L
-_Am_ = Am | SAM_L
-_p_ = p | SAM_L
-_SAM_S_ = _SAM_SHORT_
-_SAM_L_ = _SAM_LONG_
+_SAM_X_ = 2 ** np.arange(1, 10, 0.5)
+SAM_L = {'sam': _SAM_X_}
 
-def base(A1=_A1, A2=_A2, A3=_A3):
-  Ts = [_T1, _T2, _T3]
-  As = [A1, A2, A3]
-  return tuple(Par(T, A, 1, 0, 0) for T, A in zip(Ts, As))
-
-def fullA(A1=_A1, A2=_A2, A3=_A3):
-  Ts, Tms, Ams = [_T1, _T2, _T3], [_Tm1, _Tm2, _Tm3], [_Am1, _Am2, _Am3]
-  As = [A1, A2, A3]
-  return tuple(Par(T, A, Tm, Am, 0) for T, A, Tm, Am in zip(Ts, As, Tms, Ams))
-
-def fullM(Tm1=_Tm1, Tm2=_Tm2, Tm3=_Tm3, Am1=_Am1, Am2=_Am2, Am3=_Am3):
-  Ts, As = [_T1, _T2, _T3], [_A1, _A2, _A3]
-  Tms, Ams = [Tm1, Tm2, Tm3], [Am1, Am2, Am3]
-  return tuple(Par(T, A, Tm, Am, 0) for T, A, Tm, Am in zip(Ts, As, Tms, Ams))
+_T_, _A_, _Tm_, _Am_, _p_ = (
+  d | SAM_L for d in (T, A, Tm, Am, p)
+)
 
 def fullX(T1=_T1, T2=_T2, T3=_T3, A1=_A1, A2=_A2, A3=_A3, 
-    Tm1=_Tm1, Tm2=_Tm2, Tm3=_Tm3, Am1=_Am1, Am2=_Am2, Am3=_Am3,
-    p1=_p1, p2=_p2, p3=_p3):
+  Tm1=_Tm1, Tm2=_Tm2, Tm3=_Tm3, Am1=_Am1, Am2=_Am2, Am3=_Am3,
+  p1=_p1, p2=_p2, p3=_p3):
   Ts, As = [T1, T2, T3], [A1, A2, A3]
   Tms, Ams, ps = [Tm1, Tm2, Tm3], [Am1, Am2, Am3], [p1, p2, p3]
   return tuple(Par(T, A, Tm, Am, p) for T, A, Tm, Am, p in zip(Ts, As, Tms, Ams, ps))
-
-def full():
-    return PARS
 
 def sine(A, T, t, p=0):
   return A * np.sin(2 * np.pi * 1/T * t + p)
@@ -112,7 +89,7 @@ def run_sim(t, signal, sam=SAM):
 
 def run_sims(t, signal):
   sams, fits = [], []
-  for sam in _SAM_LONG_:
+  for sam in _SAM_X_:
     _, _, _, _, fit = run_sim(t, signal, int(sam))
     sams.append(sam)
     fits.append(fit)
